@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+PUNS_FILE='puns-without-blank-lines.txt'
+
+if [[ ! -f "$PUNS_FILE" ]]; then
+  echo "$PUNS_FILE does not exsist!"
+  exit 1
+fi
+
+if [[ -z "$1" ]]; then
+  echo "Argument missing: Please give a search query!"
+  exit 2
+fi
+
+result=$(grep "$1" "$PUNS_FILE")
+
+if [[ -x $(which lolcat) ]]; then
+  if [[ "$2" == 'random' ]]; then
+    echo "$result" | sort -R | head -n3 | lolcat -f | nl
+  else
+    echo "$result" | sort | lolcat -f | nl
+  fi
+else  
+  if [[ "$2" == 'random' ]]; then
+    echo "$result" | sort -R | head -n3 | nl
+  else
+    echo "$result" | sort
+  fi
+fi
