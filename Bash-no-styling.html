@@ -1,0 +1,187 @@
+<div id="doc" class="markdown-body container-fluid comment-enabled" style="position: relative;"><h1 id="Bash">Bash</h1><p>GNU Bourne-Again SHell<br>
+<em>Try this at home!</em></p><hr><h2 id="Running-Interactive">Running Interactive</h2><pre><code class="bash hljs">god@earth:/root<span class="hljs-comment">#</span>
+</code></pre><hr><h2 id="Running-Interactive1">Running Interactive</h2><pre><code class="bash hljs">god@earth:/root<span class="hljs-comment"># mycommand arg1 arg2 arg3</span>
+</code></pre><hr><h2 id="Running-Interactive2">Running Interactive</h2><p>up- and down-arrows navigate last commands<br>
+<code>history</code> prints the previous executed commands<br>
+<code>ctrl+R</code> search history<br>
+<code>ctrl+D</code> exits<br>
+<code>shift+PageDown</code>/<code>PageUp</code> move view</p><hr><h2 id="Running-Interactive3">Running Interactive</h2><p>if login: <code>~/.bash_profile</code><br>
+if not login: <code>~/.bashrc</code></p><hr><h2 id="Running-from-a-Script">Running from a Script</h2><p>Shebang:</p><pre><code class="bash hljs"><span class="hljs-meta">#!/usr/bin/env bash
+</span></code></pre><p>Make it executeable:</p><pre><code class="bash hljs">chmod +x myscript
+</code></pre><p>Call it as path or from <code>$PATH</code>:</p><pre><code class="bash hljs">god@earth:/root<span class="hljs-comment"># ./myscript</span>
+</code></pre><hr><h2 id="Comments">Comments</h2><pre><code class="bash hljs"><span class="hljs-comment"># I'm a comment!</span>
+complicated-command <span class="hljs-comment"># I'm a comment!</span>
+</code></pre><p>Also useful in interactive execution!</p><hr><h2 id="Shell-Options">Shell Options</h2><p>activate with <code>-</code>, deactivate with <code>+</code></p><pre><code class="bash hljs"><span class="hljs-built_in">set</span> -o
+</code></pre><pre><code class="bash hljs"><span class="hljs-comment">#!/usr/bin/env bash -o</span>
+</code></pre><p><code>-x</code> for debugging<br>
+<code>-e</code> for exiting if any command fails</p><hr><h2 id="Variables">Variables</h2><pre><code class="bash hljs">something=<span class="hljs-string">"I'm a String"</span>
+SOME_OTHER=42
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$something'</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$something</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$SOME_OTHER</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">${something}</span>!"</span>
+</code></pre><hr><h2 id="Variables1">Variables</h2><pre><code class="bash hljs">something=<span class="hljs-string">"I'm a String"</span>
+SOME_OTHER=42
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$something'</span> <span class="hljs-comment"># $something</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$something</span>"</span> <span class="hljs-comment"># I'm a String</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$SOME_OTHER</span> <span class="hljs-comment"># 42</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">${something}</span>!"</span> <span class="hljs-comment"># I'm a String!</span>
+</code></pre><hr><h2 id="Variables2">Variables</h2><pre><code class="bash hljs">something=<span class="hljs-string">"I'm a String"</span>
+SOME_OTHER=42
+<span class="hljs-built_in">echo</span> <span class="hljs-string">'$something'</span> <span class="hljs-comment"># $something</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$something</span>"</span> <span class="hljs-comment"># I'm a String</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$SOME_OTHER</span> <span class="hljs-comment"># 42</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">${something}</span>!"</span> <span class="hljs-comment"># I'm a String!</span>
+</code></pre><p>All variables are in global scope unless declared with the <code>local</code> keyword.</p><hr><h2 id="Arguments">Arguments</h2><p><code>$0</code> contains the path to the executing programm.<br>
+<code>$1</code>, <code>$2</code>, … contain the arguments.</p><pre><code class="bash hljs"><span class="hljs-built_in">echo</span> hello world
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"hello world"</span>
+</code></pre><p><code>shift</code> deletes the first argument</p><hr><h2 id="Special-Variables">Special Variables</h2><pre><code class="bash hljs">$? <span class="hljs-comment"># exit code of thte preivous program</span>
+<span class="hljs-variable">$#</span> <span class="hljs-comment"># number of arguments</span>
+$$ <span class="hljs-comment"># pid of the shell</span>
+$! <span class="hljs-comment"># pid of most recent background progress</span>
+$- <span class="hljs-comment"># active shell options</span>
+</code></pre><hr><h2 id="Pipelines">Pipelines</h2><pre><code class="bash hljs">head largefile.txt | sort | nl
+</code></pre><p>wire <em>stdout</em> to <em>stdin</em> of the next command</p><hr><h2 id="Redirection">Redirection</h2><pre><code class="bash hljs">&gt; <span class="hljs-comment"># pipes stdout to a file</span>
+2&gt; <span class="hljs-comment"># pipes stderr to a file</span>
+2&gt;&amp;1 <span class="hljs-comment"># pipes stderr to stdout</span>
+1&gt;&amp;2 <span class="hljs-comment"># pipes stderr to stderr</span>
+&gt;&gt; <span class="hljs-comment"># appends</span>
+&lt; file <span class="hljs-comment"># pipes file's content to stdin</span>
+</code></pre><hr><h2 id="Lines-and-Readability">Lines and Readability</h2><pre><code class="bash hljs"><span class="hljs-built_in">echo</span> <span class="hljs-string">'one'</span>; <span class="hljs-built_in">echo</span> <span class="hljs-string">'two'</span> <span class="hljs-comment"># two independet commands</span>
+<span class="hljs-built_in">echo</span> \
+<span class="hljs-string">'three'</span> <span class="hljs-comment"># this belongs to the command above</span>
+</code></pre><hr><h2 id="Conditional-Execution">Conditional Execution</h2><p>These are <em>lazy</em> logical evaluations based on exit code (0 means true):</p><pre><code class="bash hljs">command1 &amp;&amp; command2
+command3 || command4
+</code></pre><hr><h2 id="If-Statements">If Statements</h2><pre><code class="bash hljs"><span class="hljs-keyword">if</span> command1; <span class="hljs-keyword">then</span>
+    command2
+<span class="hljs-keyword">else</span>
+    command3
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-keyword">if</span> (( 1 &lt; 2)); <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">'1 is smaller than 2!'</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-keyword">if</span> [ -f <span class="hljs-string">'file.txt'</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">'file.txt is a file!'</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-keyword">if</span> [[ <span class="hljs-string">'asdf'</span> =~ ^[a-z] ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">'it matches!'</span>
+<span class="hljs-keyword">fi</span>
+</code></pre><hr><h2 id="Case-Statements">Case Statements</h2><pre><code class="bash hljs">myvar=<span class="hljs-string">'pink'</span>
+<span class="hljs-keyword">case</span> <span class="hljs-variable">$myvar</span> <span class="hljs-keyword">in</span>
+  green)
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"It's a frog."</span>
+    ;;
+  pink|purple)
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"It's an elephant!"</span>
+    ;;
+  *)
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"I don't know that."</span>
+    ;;
+<span class="hljs-keyword">esac</span>
+</code></pre><hr><h2 id="Loops">Loops</h2><pre><code class="bash hljs"><span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> apple banana clementine; <span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-variable">$item</span>
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-keyword">while</span> <span class="hljs-literal">true</span>; <span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"may I have some loops?"</span>
+<span class="hljs-keyword">done</span>
+
+&lt; file.txt | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line; <span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-variable">$line</span>
+<span class="hljs-keyword">done</span>
+</code></pre><hr><h2 id="Functions">Functions</h2><pre><code class="bash hljs"><span class="hljs-function"><span class="hljs-title">my_function</span></span>(){
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"I'm my_function, called with <span class="hljs-variable">$1</span>!"</span>
+}
+
+<span class="hljs-keyword">function</span> other_function{
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"I'm other_function!"</span>
+  <span class="hljs-built_in">return</span> 42 <span class="hljs-comment"># exit code of the function</span>
+}
+
+my_function <span class="hljs-string">"an argument"</span>
+other_function
+<span class="hljs-built_in">echo</span> $?
+</code></pre><hr><h2 id="Interactive-Script-Promt">Interactive Script Promt</h2><pre><code class="bash hljs"><span class="hljs-built_in">echo</span> -n <span class="hljs-string">'Are you sure? [y/n]: '</span>
+<span class="hljs-built_in">read</span> answer
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"You answered <span class="hljs-variable">$answer</span>."</span>
+</code></pre><hr><h2 id="Interactive-Script-Promt1">Interactive Script Promt</h2><pre><code class="bash hljs"><span class="hljs-built_in">echo</span> <span class="hljs-string">"Which OS do you want?"</span>
+select os <span class="hljs-keyword">in</span> linux windows macos; <span class="hljs-keyword">do</span>
+  <span class="hljs-keyword">case</span> <span class="hljs-variable">$os</span> <span class="hljs-keyword">in</span>
+    linux)
+      <span class="hljs-built_in">echo</span> <span class="hljs-string">"Ah, I see you're a man of culture as well."</span>
+      <span class="hljs-built_in">break</span> <span class="hljs-comment"># jump out of this endless loop</span>
+      ;;
+    *)
+      <span class="hljs-built_in">echo</span> <span class="hljs-string">"Ok."</span>
+      ;;
+  <span class="hljs-keyword">esac</span>
+<span class="hljs-keyword">done</span>
+</code></pre><hr><h2 id="Aliases">Aliases</h2><pre><code class="bash hljs"><span class="hljs-built_in">alias</span> godmode=<span class="hljs-string">"sudo -i"</span>
+<span class="hljs-built_in">alias</span> <span class="hljs-built_in">echo</span>=<span class="hljs-string">"echo God says:"</span>
+</code></pre><hr><h2 id="Expansion">Expansion</h2><pre><code class="bash hljs">myvar=<span class="hljs-string">'myvarcontent'</span>
+cat ~/{a,<span class="hljs-variable">$myvar</span>} $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"c d"</span>) <span class="hljs-string">"<span class="hljs-variable">$((1+1)</span>)"</span> /b* &lt;(ls /etc/passwd)
+</code></pre><hr><h2 id="Expansion1">Expansion</h2><pre><code class="bash hljs">myvar=<span class="hljs-string">'myvarcontent'</span>
+cat ~/{a,<span class="hljs-variable">$myvar</span>} $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"c d"</span>) <span class="hljs-string">"<span class="hljs-variable">$((1+1)</span>)"</span> /b* &lt;(ls /etc/passwd)
+
+<span class="hljs-comment"># Brace Expansion</span>
+cat ~/a ~/<span class="hljs-variable">$myvar</span> $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"c d"</span>) <span class="hljs-string">"<span class="hljs-variable">$((1+1)</span>)"</span> /b* &lt;(ls /etc/passwd)
+
+<span class="hljs-comment"># Tilde Expansion</span>
+cat /home/god/a /home/god/<span class="hljs-variable">$myvar</span> $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"c d"</span>) <span class="hljs-string">"<span class="hljs-variable">$((1+1)</span>)"</span> /b* &lt;(ls /etc/passwd)
+
+<span class="hljs-comment"># Parameter Expansion</span>
+cat /home/god/a /home/god/myvarcontent $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"c d"</span>) <span class="hljs-string">"<span class="hljs-variable">$((1+1)</span>)"</span> /b* &lt;(ls /etc/passwd)
+
+<span class="hljs-comment"># Command Substitution</span>
+cat /home/god/a /home/god/myvarcontent <span class="hljs-string">"c d"</span> <span class="hljs-string">"<span class="hljs-variable">$((1+1)</span>)"</span> /b* &lt;(ls /etc/passwd)
+<span class="hljs-comment"># "c d" means it's one argument</span>
+
+<span class="hljs-comment"># Arithmetic Expansion</span>
+cat /home/god/a /home/god/myvarcontent <span class="hljs-string">"c d"</span> <span class="hljs-string">"2"</span> /b* &lt;(ls /etc/passwd)
+<span class="hljs-comment"># "c d" means it's one argument</span>
+
+<span class="hljs-comment"># Process Substitution</span>
+cat /home/god/a /home/god/myvarcontent <span class="hljs-string">"c d"</span> <span class="hljs-string">"2"</span> /b* /dev/fd/42
+
+<span class="hljs-comment"># Word Splitting</span>
+cat /home/god/a /home/god/myvarcontent c d <span class="hljs-string">"2"</span> /b* <span class="hljs-comment"># c and d are now two arguments</span>
+
+<span class="hljs-comment"># Pathname Expansion</span>
+cat /home/god/a /home/god/myvarcontent c d <span class="hljs-string">"2"</span> /bin /boot /dev/fd/42
+
+<span class="hljs-comment"># Quote Removal</span>
+cat /home/god/a /home/god/myvarcontent c d 2 /bin /boot /dev/fd/42
+</code></pre><hr><h2 id="Expansion2">Expansion</h2><pre><code class="bash hljs">myvar=<span class="hljs-string">'myvarcontent'</span>
+cat ~/{a,<span class="hljs-variable">$myvar</span>} $(<span class="hljs-built_in">echo</span> <span class="hljs-string">"c d"</span>) <span class="hljs-string">"<span class="hljs-variable">$((1+1)</span>)"</span> /b* &lt;(ls /etc/passwd)
+<span class="hljs-comment"># Brace Expansion</span>
+<span class="hljs-comment"># Tilde Expansion</span>
+<span class="hljs-comment"># Parameter Expansion</span>
+<span class="hljs-comment"># Command Substitution</span>
+<span class="hljs-comment"># Arithmetic Expansion</span>
+<span class="hljs-comment"># Process Substitution</span>
+<span class="hljs-comment"># Word Splitting</span>
+<span class="hljs-comment"># Pathname Expansion</span>
+<span class="hljs-comment"># Quote Removal</span>
+cat /home/god/a /home/god/myvarcontent c d 2 /bin /boot /dev/fd/42
+</code></pre><hr><h2 id="Brace-Expansion">Brace Expansion</h2><pre><code class="bash hljs"><span class="hljs-built_in">echo</span> {1..7..2} <span class="hljs-comment"># start at 1, until 7, step 2</span>
+<span class="hljs-built_in">echo</span> /home/{alice,bob}/a{b,c{1..2}}
+</code></pre><hr><h2 id="Globs-Pathname-Expansion">Globs: Pathname Expansion</h2><p>Used to match files:<br>
+<code>*</code> any string<br>
+<code>?</code> any char<br>
+<code>[1-3a-c]</code> like regex: one char that is in <code>123abc</code></p><hr><h2 id="Subshells">Subshells</h2><p>inherits everything from parent shell<br>
+does not alter the parent shell</p><pre><code class="bash hljs">home=<span class="hljs-string">'home'</span>
+ls <span class="hljs-string">"/<span class="hljs-variable">$(echo "$home")</span>"</span> <span class="hljs-comment"># command substitution</span>
+</code></pre><hr><h2 id="Including-Other-Scripts">Including Other Scripts</h2><p>avoid subshell by:</p><pre><code class="bash hljs"><span class="hljs-built_in">source</span> myscript
+. myscript
+</code></pre><hr><h2 id="Handy-Commands">Handy Commands</h2><p><code>cat cd cp cut du echo find grep head history less ln ls man mkdir mmv mv nl pwd rm rmdir rsync sed sort tail tr uniq watch wc which xargs yes</code></p><hr><h1 id="Any-Questions">Any Questions?</h1><hr><h1 id="Tasks">Tasks</h1><p><em><a href="https://github.com/betanummeric/eportfolio-bash" target="_blank" rel="noopener">https://github.com/betanummeric/eportfolio-bash</a></em></p><hr><h3 id="Tasks1">Tasks</h3><p><em><a href="https://github.com/betanummeric/eportfolio-bash" target="_blank" rel="noopener">https://github.com/betanummeric/eportfolio-bash</a></em></p><ol>
+<li>Remove the blank lines from the puns file.</li>
+<li>Write a script that takes an argument and searches for that in the puns file.</li>
+<li>Validate in the script, that the puns file exists.</li>
+<li>Validate in the script, that an argument was given.</li>
+<li>Sort the found puns alphabetically.</li>
+<li>Number the found puns.</li>
+<li>Limit the result to 3 random puns.</li>
+</ol></div>
